@@ -1,4 +1,4 @@
-package com.ramon.provider.repository;
+package com.ramon.provider.manager;
 
 import com.ramon.provider.model.Post;
 import org.springframework.data.mongodb.repository.MongoRepository;

@@ -1,4 +1,4 @@
-package com.ramon.provider.repository;
+package com.ramon.provider.manager;
 
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoClient;
