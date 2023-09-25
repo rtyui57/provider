@@ -1,5 +1,6 @@
-package com.ramon.provider.rabbitmq;
+package com.ramon.provider.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,10 +27,13 @@ public class JSONUtils {
 
     static {
         mapper = new ObjectMapper();
+        SimpleDateFormat d = new SimpleDateFormat(TimeUtils.EDateFormat.UTC_ISO_3.getStrDateFormat());
+        d.setTimeZone(TimeUtils.EDateFormat.UTC_ISO_3.getTimeZ());
+        mapper.setDateFormat(d);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.configure(DeserializationFeature.FAIL_ON_TRAILING_TOKENS, true);
         writer = mapper.writer();
-        readerObject = mapper.readerFor(new TypeReference<Object>() {
+        readerObject = mapper.readerFor(new TypeReference<>() {
         });
         readerListString = mapper.readerFor(new TypeReference<List<String>>() {
         });
@@ -40,6 +45,16 @@ public class JSONUtils {
 
     public static <T extends Object> T convertValue(Object fromValue, Class<T> toValueType) {
         return mapper.convertValue(fromValue, toValueType);
+    }
+
+    public static byte[] toByteArray(Object o) {
+        byte[] res = null;
+        try {
+            res = mapper.writeValueAsBytes(o);
+        } catch (JsonProcessingException ex) {
+            throw new RuntimeException(ex);
+        }
+        return res;
     }
 
     public static <T> T fromJson(String json, TypeReference<T> typeRef) {

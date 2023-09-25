@@ -1,25 +1,18 @@
 package com.ramon.provider.controller;
 
 import com.ramon.provider.manager.DeviceRegisterManager;
-import com.ramon.provider.model.DeviceRegister;
 import com.ramon.provider.model.Post;
 import com.ramon.provider.manager.repository.PostRepository;
 ///import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import com.ramon.provider.rabbitmq.JSONUtils;
-import com.ramon.provider.rabbitmq.RabbitConfiguration;
-import com.ramon.provider.rabbitmq.RabbitConsumer;
 import com.ramon.provider.rs.converter.DeviceRegisterConverter;
 import com.ramon.provider.rs.entity.RSDeviceRegister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
-import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping("/mock")
