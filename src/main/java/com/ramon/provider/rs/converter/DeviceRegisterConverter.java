@@ -12,7 +12,6 @@ public class DeviceRegisterConverter {
     public DeviceRegister convert(RSDeviceRegister source) {
         DeviceRegister deviceRegister = new DeviceRegister();
         deviceRegister.setCoordenadas(source.getCoordenadas());
-        deviceRegister.setId(source.getId());
         deviceRegister.setPresion(source.getPresion());
         deviceRegister.setOxigenoSangre(source.getOxigenoSangre());
         deviceRegister.setFechaRegistro(new Date(source.getTimestamp()));

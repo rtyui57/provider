@@ -3,13 +3,11 @@ package com.ramon.provider.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Document("deviceRegister")
-public class DeviceRegister {
-
-    @Id
-    protected String id;
+public class DeviceRegister implements Serializable {
 
     protected Date fechaRegistro;
 
@@ -26,14 +24,6 @@ public class DeviceRegister {
     protected double presion;
 
     protected double oxigenoSangre;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public Date getFechaRegistro() {
         return fechaRegistro;

@@ -3,35 +3,24 @@ package com.ramon.provider.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Document("device")
-public class Device {
+public class Device implements Serializable {
 
     @Id
-    protected String id;
-
     protected String name;
-
     protected String originCountry;
-
     protected Date lastModificationDate;
-
     protected Date creationDate;
-
     protected String description;
-
+    protected String category;
+    protected String customer;
+    protected Integer registerSize = 0;
     protected List<DeviceRegister> registros = new ArrayList<>();
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -73,11 +62,36 @@ public class Device {
         this.description = description;
     }
 
-    protected List<DeviceRegister> getRegistros() {
+    public List<DeviceRegister> getRegistros() {
         return registros;
     }
 
-    protected void addRegistro(DeviceRegister register) {
+    public void addRegistro(DeviceRegister register) {
         registros.add(register);
+        registerSize++;
+    }
+
+    public Integer getRegisterSize() {
+        return registros.size();
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public void setRegisterSize(Integer registerSize) {
+        this.registerSize = registerSize;
     }
 }

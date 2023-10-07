@@ -8,10 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-/**
- *
- * @author onamaya
- */
 public class RabbitMessage {
 
     protected static final Random RANDOM_SEED = new SecureRandom();
