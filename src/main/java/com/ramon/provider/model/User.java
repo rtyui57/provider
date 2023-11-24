@@ -1,15 +1,20 @@
 package com.ramon.provider.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Document("user")
+@JsonIgnoreProperties({"asignaturas"})
 public class User {
 
     @Id
     protected String username;
+    protected String id;
     protected String password;
     protected String firstName;
     protected String lastName;
@@ -18,7 +23,8 @@ public class User {
     protected Date modificationDate;
     protected String description;
     protected String icon;
-    protected String customer;
+    protected PUESTO puesto;
+    protected List<Asignatura> asignaturas = new ArrayList<>();
 
     public String getUsername() {
         return username;
@@ -92,11 +98,39 @@ public class User {
         this.icon = icon;
     }
 
-    public String getCustomer() {
-        return customer;
+    public PUESTO getPuesto() {
+        return puesto;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setPuesto(PUESTO puestoDado) {
+        this.puesto = puestoDado;
+    }
+
+    public enum PUESTO {
+        PROFESOR,
+        ESTUDIANTE,
+        CONSERJE
+    }
+
+    public String getId() {
+        return username;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Asignatura> getAsignaturas() {
+        return asignaturas;
+    }
+
+    public void setAsignaturas(List<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
+    }
+
+    public List<Horario> getHorarios() {
+        List<Horario> horarios = new ArrayList<>();
+        asignaturas.forEach(a -> horarios.addAll(a.getHorarios()));
+        return horarios;
     }
 }

@@ -1,6 +1,8 @@
-package com.ramon.provider.manager;
+package com.ramon.provider.manager.user;
 
-import com.ramon.provider.manager.repository.UserRepository;
+import com.ramon.provider.manager.asignatura.AsignaturaManager;
+import com.ramon.provider.model.Asignatura;
+import com.ramon.provider.model.Horario;
 import com.ramon.provider.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,18 +18,18 @@ public class UserManager {
     @Autowired
     protected UserRepository userRepository;
 
+    @Autowired
+    protected AsignaturaManager asignaturaManager;
+
     public List<User> findAll() {
         return userRepository.findAll();
-    }
-
-    public List<User> findByCustomer(String customer) {
-        return userRepository.findByCustomer(customer);
     }
 
     public User find(String id) {
         Optional<User> user = userRepository.findById(id);
         return user.get();
     }
+
 
     public void deleteUser(String id) {
         userRepository.delete(find(id));
@@ -46,7 +48,6 @@ public class UserManager {
         } else {
             user = opt.get();
         }
-        user.setCustomer(newUser.getCustomer());
         user.setEmail(newUser.getEmail());
         user.setDescription(newUser.getDescription());
         user.setModificationDate(new Date());
@@ -54,7 +55,20 @@ public class UserManager {
         user.setLastName(newUser.getLastName());
         user.setIcon(newUser.getIcon());
         user.setPassword(newUser.getPassword());
+        user.setPuesto(newUser.getPuesto());
         userRepository.save(user);
-        //userRepository.findAll();
+    }
+
+    public void addAsignatura(String userId, String asignaturaId) {
+        User user = userRepository.findById(userId).get();
+        Asignatura asignatura = asignaturaManager.find(asignaturaId);
+        user.getAsignaturas().add(asignatura);
+        asignatura.addAlumno(user);
+        userRepository.save(user);
+        asignaturaManager.saveAsignatura(asignatura);
+    }
+
+    public List<Horario> getHorarios(String id) {
+        return find(id).getHorarios();
     }
 }
