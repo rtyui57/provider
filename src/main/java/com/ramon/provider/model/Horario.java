@@ -6,9 +6,17 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Document("horario")
 public class Horario {
+
+    public enum AttendantState {
+        TO_ATTEND,
+        ATTENDED,
+        NOT_ATTENDED
+    }
 
     @Id
     private String id;
@@ -23,6 +31,7 @@ public class Horario {
     @DBRef
     private Asignatura asignatura;
     private String color;
+    private Map<String, AttendantState> attendants = new HashMap();
 
     public Aula getAula() {
         return aula;
@@ -86,5 +95,13 @@ public class Horario {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public Map<String, AttendantState> getAttendants() {
+        return attendants;
+    }
+
+    public void setAttendants(Map<String, AttendantState> attendants) {
+        this.attendants = attendants;
     }
 }

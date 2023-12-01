@@ -1,8 +1,10 @@
 package com.ramon.provider.controller;
 
+import com.ramon.provider.converters.AsignaturaConverter;
 import com.ramon.provider.manager.asignatura.AsignaturaManager;
 import com.ramon.provider.model.Asignatura;
 import com.ramon.provider.model.Horario;
+import com.ramon.provider.rs.entity.RSAsignatura;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,14 +17,17 @@ public class AsignaturaController {
     @Autowired
     protected AsignaturaManager asignaturaManager;
 
+    @Autowired
+    AsignaturaConverter converter;
+
     @GetMapping
-    public List<Asignatura> list() {
-        return asignaturaManager.list();
+    public List<RSAsignatura> list() {
+        return converter.convert(asignaturaManager.list());
     }
 
     @GetMapping("/{id}")
-    public Asignatura find(@PathVariable String id) {
-        return asignaturaManager.find(id);
+    public RSAsignatura find(@PathVariable String id) {
+        return converter.convert(asignaturaManager.find(id));
     }
 
     @DeleteMapping("/{id}")
@@ -46,7 +51,17 @@ public class AsignaturaController {
     }
 
     @PostMapping("/{asignaturaId}/horario")
-    public void addAlumno(@PathVariable String asignaturaId, @RequestBody Horario horario) {
+    public void addHorario(@PathVariable String asignaturaId, @RequestBody Horario horario) {
+        asignaturaManager.addHorario(asignaturaId, horario);
+    }
+
+    @DeleteMapping("/{asignaturaId}/alumno/{userId}")
+    public void removeAlumno(@PathVariable String asignaturaId, @PathVariable String userId) {
+        asignaturaManager.addAlumno(asignaturaId, userId);
+    }
+
+    @DeleteMapping("/{asignaturaId}/alumno/{userId}")
+    public void removeProfesor(@PathVariable String asignaturaId, @RequestBody Horario horario) {
         asignaturaManager.addHorario(asignaturaId, horario);
     }
 

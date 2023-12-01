@@ -1,8 +1,10 @@
 package com.ramon.provider.controller;
 
+import com.ramon.provider.converters.BuildingConverter;
 import com.ramon.provider.manager.building.BuildingManager;
 import com.ramon.provider.model.Aula;
 import com.ramon.provider.model.Building;
+import com.ramon.provider.rs.entity.RSBuilding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +18,12 @@ public class BuildingController {
     @Autowired
     protected BuildingManager manager;
 
+    @Autowired
+    protected BuildingConverter converter;
+
     @GetMapping
-    public List<Building> list() {
-        return manager.list();
+    public List<RSBuilding> list() {
+        return converter.convert(manager.list());
     }
 
     @PostMapping
@@ -27,8 +32,8 @@ public class BuildingController {
     }
 
     @GetMapping("/{id}")
-    public Building find(@PathVariable String id) {
-        return manager.find(id);
+    public RSBuilding find(@PathVariable String id) {
+        return converter.convert(manager.find(id));
     }
 
     @DeleteMapping

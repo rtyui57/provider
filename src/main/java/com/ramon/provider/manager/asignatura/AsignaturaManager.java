@@ -43,6 +43,9 @@ public class AsignaturaManager {
         asignatura.getProfesores().addAll(newAsignatura.getProfesores());
         asignatura.getHorarios().addAll(newAsignatura.getHorarios());
         asignatura.setDisplayName(newAsignatura.getDisplayName());
+        asignatura.setCurso(newAsignatura.getCurso());
+        asignatura.setGrado(newAsignatura.getGrado());
+        asignatura.setCreditos(newAsignatura.getCreditos());
         repository.save(asignatura);
     }
 
@@ -78,6 +81,21 @@ public class AsignaturaManager {
     }
 
     public void addAlumno(String asignaturaId, String userId) {
+        User user = userManager.find(userId);
+        Asignatura asignatura = find(asignaturaId);
+        asignatura.addAlumno(user);
+        repository.save(asignatura);
+    }
+
+    public void removeProfesor(String asignaturaId, String userId) {
+        User user = userManager.find(userId);
+        Asignatura asignatura = find(asignaturaId);
+        asignatura.getProfesores().remove(user);
+        repository.save(asignatura);
+        userManager.save(user);
+    }
+
+    public void removeAlumno(String asignaturaId, String userId) {
         User user = userManager.find(userId);
         Asignatura asignatura = find(asignaturaId);
         asignatura.addAlumno(user);

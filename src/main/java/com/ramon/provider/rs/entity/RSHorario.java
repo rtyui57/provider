@@ -1,7 +1,11 @@
 package com.ramon.provider.rs.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ramon.provider.model.Horario;
+
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RSHorario {
 
@@ -15,6 +19,7 @@ public class RSHorario {
     private String title;
     private String color;
     private String descripcion;
+    private Map<String, Horario.AttendantState> attendants = new HashMap();
 
     public String getId() {
         return id;
@@ -78,5 +83,13 @@ public class RSHorario {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Map<String, Horario.AttendantState> getAttendants() {
+        return attendants;
+    }
+
+    public void setAttendants(Map<String, Horario.AttendantState> attendants) {
+        this.attendants = attendants;
     }
 }

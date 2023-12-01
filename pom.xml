@@ -61,6 +61,11 @@
             <groupId>antlr</groupId>
             <artifactId>antlr</artifactId>
         </dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.9.7</version> <!-- La versión puede variar, verifica la última versión disponible -->
+		</dependency>
     </dependencies>
 	<build>
 		<plugins>

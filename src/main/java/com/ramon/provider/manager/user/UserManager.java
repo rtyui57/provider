@@ -71,4 +71,8 @@ public class UserManager {
     public List<Horario> getHorarios(String id) {
         return find(id).getHorarios();
     }
+
+    public void save(User user) {
+        userRepository.save(user);
+    }
 }

@@ -2,6 +2,7 @@ package com.ramon.provider.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class User {
     protected String description;
     protected String icon;
     protected PUESTO puesto;
+    @DBRef
     protected List<Asignatura> asignaturas = new ArrayList<>();
 
     public String getUsername() {

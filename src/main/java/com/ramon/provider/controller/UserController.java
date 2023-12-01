@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping(path = "/auth")
     public Map<String, Object> login(@RequestBody RSUser user) {
-        return Map.of("username", user.getUser(), "customer", "customer");
+        return Map.of("username", "", "customer", "customer");
     }
 
     @GetMapping("/list")

@@ -14,6 +14,9 @@ public class Asignatura {
     protected String id;
     protected String name;
     protected String displayName;
+    protected String grado;
+    protected String curso;
+    protected Integer creditos;
     @DBRef
     protected List<User> profesores = new ArrayList<>();
     @DBRef
@@ -46,7 +49,9 @@ public class Asignatura {
     }
 
     public void addProfesor(User user) {
-        profesores.add(user);
+        if (!profesores.stream().map(User::getUsername).toList().contains(user.getUsername())) {
+            profesores.add(user);
+        }
     }
 
     public List<User> getAlumnos() {
@@ -58,7 +63,9 @@ public class Asignatura {
     }
 
     public void addAlumno(User user) {
-        alumnos.add(user);
+        if (!alumnos.stream().map(User::getUsername).toList().contains(user.getUsername())) {
+            alumnos.add(user);
+        }
     }
 
     public List<Horario> getHorarios() {
@@ -79,5 +86,29 @@ public class Asignatura {
 
     public void setDisplayName(String displaName) {
         this.displayName = displaName;
+    }
+
+    public String getGrado() {
+        return grado;
+    }
+
+    public void setGrado(String grado) {
+        this.grado = grado;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public Integer getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(Integer creditos) {
+        this.creditos = creditos;
     }
 }
