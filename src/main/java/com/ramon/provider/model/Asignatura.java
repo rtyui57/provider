@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Document("asignatura")
 public class Asignatura {
@@ -66,6 +67,28 @@ public class Asignatura {
         if (!alumnos.stream().map(User::getUsername).toList().contains(user.getUsername())) {
             alumnos.add(user);
         }
+    }
+
+    public void removeAlumno(String alumnoId) {
+        int index = 0;
+        for (User user : alumnos) {
+            if (Objects.equals(alumnoId, user.getId())) {
+                break;
+            }
+            index++;
+        }
+        alumnos.remove(index);
+    }
+
+    public void removeProfesor(String profesorId) {
+        int index = 0;
+        for (User user : profesores) {
+            if (Objects.equals(profesorId, user.getId())) {
+                break;
+            }
+            index++;
+        }
+        profesores.remove(index);
     }
 
     public List<Horario> getHorarios() {

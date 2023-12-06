@@ -1,5 +1,6 @@
 package com.ramon.provider.manager.building;
 
+import com.ramon.provider.manager.CommonManager;
 import com.ramon.provider.model.Aula;
 import com.ramon.provider.model.Building;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,12 @@ public class BuildingManager {
     @Autowired
     protected BuildingRepo repo;
 
+    @Autowired
+    protected CommonManager commonManager;
+
+    @Autowired
+    protected AulaManager aulaManager;
+
     public List<Building> list() {
         return repo.findAll();
     }
@@ -24,11 +31,15 @@ public class BuildingManager {
     }
 
     public void delete(String id) {
-        repo.deleteById(id);
+        commonManager.removeBuilding(find(id));
+    }
+
+    public void delete(Building building) {
+        repo.delete(building);
     }
 
     public void importBuilding(Building newBuilding) {
-        newBuilding.setId(newBuilding.getName());
+        newBuilding.setId(newBuilding.getName().replace(" ", "_"));
         Building building;
         if (repo.findById(newBuilding.getId()).isEmpty()) {
             building = new Building();
@@ -43,13 +54,15 @@ public class BuildingManager {
     }
 
     public void deleteAll() {
-        repo.deleteAll();
+        repo.findAll().forEach(building -> commonManager.removeBuilding(building));
     }
 
     public void importClassroom(String id, Aula aula) {
         Building building = find(id);
-        aula.setId(id + "--" + aula.getName());
+        aula.setId(id + "--" + aula.getName().replace(" ", "_"));
         building.getAulas().add(aula);
+        aula.setBuilding(building);
+        aulaManager.saveAula(aula);
         repo.save(building);
     }
 
@@ -57,7 +70,7 @@ public class BuildingManager {
         Map<String, String> classrooms = new HashMap<>();
         for (Building building : repo.findAll()) {
             for (Aula aula : building.getAulas()) {
-                classrooms.put(aula.getName(), building.getId());
+                classrooms.put(aula.getId(), building.getId());
             }
         }
         return classrooms;

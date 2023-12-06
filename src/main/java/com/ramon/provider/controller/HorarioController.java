@@ -53,4 +53,9 @@ public class HorarioController {
     public void saveAttendants(@PathVariable String id, @RequestBody Map<String, Horario.AttendantState> attendants) {
         horarioManager.saveAttendants(id, attendants);
     }
+
+    @DeleteMapping
+    public void deleteAll() {
+        horarioManager.deleteAll();
+    }
 }

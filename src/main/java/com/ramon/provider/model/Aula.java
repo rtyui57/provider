@@ -14,6 +14,8 @@ public class Aula {
     protected int capacity;
     @DBRef
     protected List<Horario> horarios = new ArrayList<>();
+    @DBRef
+    protected Building building;
 
     public String getId() {
         return id;
@@ -48,5 +50,13 @@ public class Aula {
 
     public void setHorarios(List<Horario> horarios) {
         this.horarios = horarios;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 }

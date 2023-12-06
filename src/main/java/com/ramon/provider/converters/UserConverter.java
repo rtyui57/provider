@@ -15,6 +15,14 @@ public class UserConverter {
         res.setId(user.getId());
         res.setEmail(user.getEmail());
         res.setUsername(user.getUsername());
+        res.setDescription(user.getDescription());
+        res.setIcon(user.getIcon());
+        res.setCreationDate(user.getCreationDate());
+        res.setModificationDate(user.getModificationDate());
+        res.setFirstName(user.getFirstName());
+        res.setLastName(user.getLastName());
+        res.setPassword(user.getPassword());
+        res.setPuesto(user.getPuesto());
         return res;
     }
 

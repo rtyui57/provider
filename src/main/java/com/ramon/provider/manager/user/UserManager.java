@@ -1,7 +1,6 @@
 package com.ramon.provider.manager.user;
 
-import com.ramon.provider.manager.asignatura.AsignaturaManager;
-import com.ramon.provider.model.Asignatura;
+import com.ramon.provider.manager.CommonManager;
 import com.ramon.provider.model.Horario;
 import com.ramon.provider.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class UserManager {
     protected UserRepository userRepository;
 
     @Autowired
-    protected AsignaturaManager asignaturaManager;
+    protected CommonManager commonManager;
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -30,9 +29,17 @@ public class UserManager {
         return user.get();
     }
 
+    public void deleteAll() {
+        userRepository.findAll().forEach(user -> commonManager.removeUser(user));
+    }
 
     public void deleteUser(String id) {
-        userRepository.delete(find(id));
+        User user = userRepository.findById(id).get();
+        commonManager.removeUser(user);
+    }
+
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
     public void importUser(User newUser) {
@@ -57,15 +64,6 @@ public class UserManager {
         user.setPassword(newUser.getPassword());
         user.setPuesto(newUser.getPuesto());
         userRepository.save(user);
-    }
-
-    public void addAsignatura(String userId, String asignaturaId) {
-        User user = userRepository.findById(userId).get();
-        Asignatura asignatura = asignaturaManager.find(asignaturaId);
-        user.getAsignaturas().add(asignatura);
-        asignatura.addAlumno(user);
-        userRepository.save(user);
-        asignaturaManager.saveAsignatura(asignatura);
     }
 
     public List<Horario> getHorarios(String id) {

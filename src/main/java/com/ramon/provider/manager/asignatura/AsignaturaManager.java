@@ -1,11 +1,8 @@
 package com.ramon.provider.manager.asignatura;
 
 import com.ramon.provider.exceptions.ResourceNotFoundException;
-import com.ramon.provider.manager.horario.HorarioManager;
-import com.ramon.provider.manager.user.UserManager;
+import com.ramon.provider.manager.CommonManager;
 import com.ramon.provider.model.Asignatura;
-import com.ramon.provider.model.Horario;
-import com.ramon.provider.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,10 +17,7 @@ public class AsignaturaManager {
     protected AsignaturaRepository repository;
 
     @Autowired
-    protected HorarioManager horarioManager;
-
-    @Autowired
-    protected UserManager userManager;
+    protected CommonManager commonManager;
 
     public void saveAsignatura(Asignatura asignatura) {
         repository.save(asignatura);
@@ -54,7 +48,16 @@ public class AsignaturaManager {
     }
 
     public void delete(String id) {
-        repository.deleteById(id);
+        Asignatura asignatura = repository.findById(id).get();
+        commonManager.removeAsignatura(asignatura);
+    }
+
+    public void delete(Asignatura asignatura) {
+        repository.delete(asignatura);
+    }
+
+    public void deleteAll() {
+        repository.findAll().forEach(as -> commonManager.removeAsignatura(as));
     }
 
     public Asignatura find(String id) {
@@ -63,43 +66,6 @@ public class AsignaturaManager {
             throw new ResourceNotFoundException("Asginatura no existe");
         }
         return asignatura.get();
-    }
-
-    public void addHorario(String id, Horario horario) {
-        Asignatura asignatura = find(id);
-        horario.setAsignatura(asignatura);
-        //horarioManager.importHorario(horario);
-        asignatura.addHorario(horario);
-        repository.save(asignatura);
-    }
-
-    public void addProfesor(String asignaturaId, String userId) {
-        User user = userManager.find(userId);
-        Asignatura asignatura = find(asignaturaId);
-        asignatura.addProfesor(user);
-        repository.save(asignatura);
-    }
-
-    public void addAlumno(String asignaturaId, String userId) {
-        User user = userManager.find(userId);
-        Asignatura asignatura = find(asignaturaId);
-        asignatura.addAlumno(user);
-        repository.save(asignatura);
-    }
-
-    public void removeProfesor(String asignaturaId, String userId) {
-        User user = userManager.find(userId);
-        Asignatura asignatura = find(asignaturaId);
-        asignatura.getProfesores().remove(user);
-        repository.save(asignatura);
-        userManager.save(user);
-    }
-
-    public void removeAlumno(String asignaturaId, String userId) {
-        User user = userManager.find(userId);
-        Asignatura asignatura = find(asignaturaId);
-        asignatura.addAlumno(user);
-        repository.save(asignatura);
     }
 
     public List<String> getNombres() {

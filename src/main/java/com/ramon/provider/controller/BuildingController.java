@@ -41,6 +41,11 @@ public class BuildingController {
         manager.deleteAll();
     }
 
+    @DeleteMapping(path = "/{id}")
+    public void deleteAll(@PathVariable String id) {
+        manager.delete(id);
+    }
+
     @PostMapping("/{id}/classroom")
     public void createClassroom(@PathVariable String id, @RequestBody Aula aula) {
         manager.importClassroom(id, aula);

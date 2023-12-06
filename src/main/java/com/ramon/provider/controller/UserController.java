@@ -1,6 +1,6 @@
 package com.ramon.provider.controller;
 
-import com.ramon.provider.manager.horario.HorarioManager;
+import com.ramon.provider.converters.UserConverter;
 import com.ramon.provider.manager.user.UserManager;
 import com.ramon.provider.model.Horario;
 import com.ramon.provider.model.User;
@@ -21,7 +21,7 @@ public class UserController {
     protected UserManager userManager;
 
     @Autowired
-    protected HorarioManager horarioManager;
+    protected UserConverter userConverter;
 
     @PostMapping(path = "/auth")
     public Map<String, Object> login(@RequestBody RSUser user) {
@@ -29,14 +29,13 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public List<User> listUsers() {
-        return userManager.findAll();
+    public List<RSUser> listUsers() {
+        return userConverter.convert(userManager.findAll());
     }
 
-
     @GetMapping
-    public User findUser(@RequestParam String id) {
-        return userManager.find(id);
+    public RSUser findUser(@RequestParam String id) {
+        return userConverter.convert(userManager.find(id));
     }
 
     @PostMapping
@@ -55,9 +54,9 @@ public class UserController {
 
     }
 
-    @PostMapping("/{id}")
-    public void addAsignatura(@PathVariable String id, @RequestParam String asginatura) {
-        userManager.addAsignatura(id, asginatura);
+    @DeleteMapping
+    public void deleteAll() {
+        userManager.deleteAll();
     }
 }
 

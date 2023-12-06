@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Document("user")
 @JsonIgnoreProperties({"asignaturas"})
@@ -124,6 +125,17 @@ public class User {
 
     public List<Asignatura> getAsignaturas() {
         return asignaturas;
+    }
+
+    public void removeAsignatura(String asignaturaId) {
+        int index = 0;
+        for (Asignatura asignatura : asignaturas) {
+            if (Objects.equals(asignaturaId, asignatura.getId())) {
+                break;
+            }
+            index++;
+        }
+        asignaturas.remove(index);
     }
 
     public void setAsignaturas(List<Asignatura> asignaturas) {

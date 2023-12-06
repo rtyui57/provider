@@ -10,7 +10,7 @@ public class RSAsignatura {
     protected String displayName;
     protected String grado;
     protected String curso;
-    protected int creditos;
+    protected Integer creditos;
     protected List<RSUser> profesores = new ArrayList<>();
     protected List<RSUser> alumnos = new ArrayList<>();
     protected List<RSHorario> horarios = new ArrayList<>();
@@ -79,11 +79,11 @@ public class RSAsignatura {
         this.curso = curso;
     }
 
-    public int getCreditos() {
+    public Integer getCreditos() {
         return creditos;
     }
 
-    public void setCreditos(int creditos) {
+    public void setCreditos(Integer creditos) {
         this.creditos = creditos;
     }
 }
