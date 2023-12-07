@@ -16,7 +16,6 @@ public class User {
 
     @Id
     protected String username;
-    protected String id;
     protected String password;
     protected String firstName;
     protected String lastName;
@@ -113,14 +112,6 @@ public class User {
         PROFESOR,
         ESTUDIANTE,
         CONSERJE
-    }
-
-    public String getId() {
-        return username;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public List<Asignatura> getAsignaturas() {

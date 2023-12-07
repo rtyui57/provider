@@ -5,12 +5,12 @@ import com.ramon.provider.manager.user.UserManager;
 import com.ramon.provider.model.Horario;
 import com.ramon.provider.model.User;
 import com.ramon.provider.rs.entity.RSUser;
+import com.ramon.provider.security.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -23,9 +23,12 @@ public class UserController {
     @Autowired
     protected UserConverter userConverter;
 
+    @Autowired
+    protected SecurityManager securityManager;
+
     @PostMapping(path = "/auth")
-    public Map<String, Object> login(@RequestBody RSUser user) {
-        return Map.of("username", "", "customer", "customer");
+    public String login(@RequestBody RSUser user) {
+        return securityManager.authenticate(user);
     }
 
     @GetMapping("/list")

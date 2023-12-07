@@ -9,6 +9,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -47,13 +48,13 @@ public class UserManager {
             throw new RuntimeException("User must have name");
         }
         User user;
-        Optional<User> opt = userRepository.findById(newUser.getUsername());
-        if (opt.isEmpty()) {
+        User opt = userRepository.findByUsername(newUser.getUsername());
+        if (opt == null) {
             user = new User();
             user.setCreationDate(new Date());
             user.setUsername(newUser.getUsername());
         } else {
-            user = opt.get();
+            user = opt;
         }
         user.setEmail(newUser.getEmail());
         user.setDescription(newUser.getDescription());
@@ -72,5 +73,13 @@ public class UserManager {
 
     public void save(User user) {
         userRepository.save(user);
+    }
+
+    public String login(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user != null && Objects.equals(user.getPassword(), password)) {
+            return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+        }
+        throw new RuntimeException("Username or password invalid");
     }
 }

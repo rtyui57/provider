@@ -128,7 +128,7 @@ public class CommonManager {
     public void addProfesor(String asignaturaId, String userId) {
         User profesor = userManager.find(userId);
         Asignatura asignatura = asignaturaManager.find(asignaturaId);
-        if (!asignatura.getProfesores().stream().map(User::getId).toList().contains(userId) && !asignatura.getAlumnos().stream().map(User::getId).toList().contains(userId) && Objects.equals(profesor.getPuesto(), User.PUESTO.PROFESOR)) {
+        if (!asignatura.getProfesores().stream().map(User::getUsername).toList().contains(userId) && !asignatura.getAlumnos().stream().map(User::getUsername).toList().contains(userId) && Objects.equals(profesor.getPuesto(), User.PUESTO.PROFESOR)) {
             profesor.getAsignaturas().add(asignatura);
             userManager.save(profesor);
             asignatura.addProfesor(profesor);
@@ -141,7 +141,7 @@ public class CommonManager {
     public void addAlumno(String asignaturaId, String userId) {
         User alumno = userManager.find(userId);
         Asignatura asignatura = asignaturaManager.find(asignaturaId);
-        if (!asignatura.getProfesores().stream().map(User::getId).toList().contains(userId) && !asignatura.getAlumnos().stream().map(User::getId).toList().contains(userId) && Objects.equals(alumno.getPuesto(), User.PUESTO.ESTUDIANTE)) {
+        if (!asignatura.getProfesores().stream().map(User::getUsername).toList().contains(userId) && !asignatura.getAlumnos().stream().map(User::getUsername).toList().contains(userId) && Objects.equals(alumno.getPuesto(), User.PUESTO.ESTUDIANTE)) {
             alumno.getAsignaturas().add(asignatura);
             userManager.save(alumno);
             asignatura.addAlumno(alumno);

@@ -71,7 +71,7 @@ public class HorarioManager {
         attendants.addAll(horario.getAsignatura().getAlumnos());
         attendants.addAll(horario.getAsignatura().getProfesores());
         for (User user : attendants) {
-            horario.getAttendants().put(user.getId(), Horario.AttendantState.TO_ATTEND);
+            horario.getAttendants().put(user.getUsername(), Horario.AttendantState.TO_ATTEND);
         }
     }
 

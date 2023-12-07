@@ -72,7 +72,7 @@ public class Asignatura {
     public void removeAlumno(String alumnoId) {
         int index = 0;
         for (User user : alumnos) {
-            if (Objects.equals(alumnoId, user.getId())) {
+            if (Objects.equals(alumnoId, user.getUsername())) {
                 break;
             }
             index++;
@@ -83,7 +83,7 @@ public class Asignatura {
     public void removeProfesor(String profesorId) {
         int index = 0;
         for (User user : profesores) {
-            if (Objects.equals(profesorId, user.getId())) {
+            if (Objects.equals(profesorId, user.getUsername())) {
                 break;
             }
             index++;

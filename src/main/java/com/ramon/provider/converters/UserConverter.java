@@ -12,7 +12,6 @@ public class UserConverter {
 
     public RSUser convert(User user) {
         RSUser res = new RSUser();
-        res.setId(user.getId());
         res.setEmail(user.getEmail());
         res.setUsername(user.getUsername());
         res.setDescription(user.getDescription());
@@ -23,6 +22,7 @@ public class UserConverter {
         res.setLastName(user.getLastName());
         res.setPassword(user.getPassword());
         res.setPuesto(user.getPuesto());
+        res.setId(user.getUsername());
         return res;
     }
 
