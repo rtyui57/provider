@@ -7,6 +7,7 @@ import com.ramon.provider.model.User;
 import com.ramon.provider.rs.entity.RSUser;
 import com.ramon.provider.security.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Transactional
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -32,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public List<RSUser> listUsers() {
+    public List<RSUser> listUsers(@Header String Hola) {
         return userConverter.convert(userManager.findAll());
     }
 
