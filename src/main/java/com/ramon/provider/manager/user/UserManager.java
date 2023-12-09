@@ -1,5 +1,6 @@
 package com.ramon.provider.manager.user;
 
+import com.ramon.provider.exceptions.ResourceNotFoundException;
 import com.ramon.provider.manager.CommonManager;
 import com.ramon.provider.model.Horario;
 import com.ramon.provider.model.User;
@@ -10,7 +11,6 @@ import org.springframework.util.ObjectUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Component
 public class UserManager {
@@ -26,8 +26,11 @@ public class UserManager {
     }
 
     public User find(String id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.get();
+        User user = userRepository.findByUsername(id);
+        if (user == null) {
+            throw new ResourceNotFoundException("User not found");
+        }
+        return user;
     }
 
     public void deleteAll() {

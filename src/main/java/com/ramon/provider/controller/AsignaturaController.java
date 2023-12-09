@@ -1,6 +1,7 @@
 package com.ramon.provider.controller;
 
 import com.ramon.provider.converters.AsignaturaConverter;
+import com.ramon.provider.exceptions.ResourceNotFoundException;
 import com.ramon.provider.manager.CommonManager;
 import com.ramon.provider.manager.asignatura.AsignaturaManager;
 import com.ramon.provider.model.Asignatura;
@@ -71,5 +72,10 @@ public class AsignaturaController {
     @DeleteMapping
     public void removeAll() {
         asignaturaManager.deleteAll();
+    }
+
+    @GetMapping(path = "asdljkfhsuidfgh")
+    public void test() {
+        throw new ResourceNotFoundException("Not found");
     }
 }

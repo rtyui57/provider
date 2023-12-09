@@ -17,7 +17,7 @@ public class SecurityManager {
 
     public String authenticate(RSUser user) {
         //authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        UserAuth userDetails = (UserAuth) userDetailsService.loadUserByUsername(user.getUsername());
         return JWTUtils.generateToken(userDetails);
     }
 }

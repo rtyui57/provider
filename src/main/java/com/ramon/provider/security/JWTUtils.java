@@ -3,17 +3,19 @@ package com.ramon.provider.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class JWTUtils {
 
     protected final static String SECRET = "secret";
 
-    public static String generateToken(UserDetails userDetails) {
+    public static String generateToken(UserAuth userDetails) {
         return Jwts.builder().
-                setClaims(new HashMap<>()).
+                setClaims(new HashMap<>(Map.of("auths", userDetails.getAuthorities(), "role", userDetails.getRole()
+                        , "email", userDetails.getEmail()))).
                 setSubject(userDetails.getUsername()).
                 setIssuedAt(new Date()).
                 setExpiration(new Date(System.currentTimeMillis() + 10000000000L)).
