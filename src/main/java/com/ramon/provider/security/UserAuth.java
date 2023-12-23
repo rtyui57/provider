@@ -13,8 +13,10 @@ public class UserAuth implements UserDetails {
     public UserAuth(User user) {
         username = user.getUsername();
         password = user.getPassword();
-        authorities = user.getPuesto() == User.PUESTO.PROFESOR ? List.of(new Authority(Authority.Auth.WRITE), new Authority(Authority.Auth.READ)) : List.of(new Authority(Authority.Auth.READ));
-        role = user.getPuesto().name();
+        authorities = new ArrayList<>();
+        role = "PROFESOR";
+        //authorities = user.getPuesto() == User.PUESTO.PROFESOR ? List.of(new Authority(Authority.Auth.WRITE), new Authority(Authority.Auth.READ)) : List.of(new Authority(Authority.Auth.READ));
+        //role = user.getPuesto().name();
         email = "sfj";
     }
 

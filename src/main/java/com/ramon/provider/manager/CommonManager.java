@@ -1,5 +1,6 @@
 package com.ramon.provider.manager;
 
+import com.ramon.provider.exceptions.CustomException;
 import com.ramon.provider.manager.asignatura.AsignaturaManager;
 import com.ramon.provider.manager.building.AulaManager;
 import com.ramon.provider.manager.building.BuildingManager;
@@ -134,7 +135,7 @@ public class CommonManager {
             asignatura.addProfesor(profesor);
             asignaturaManager.saveAsignatura(asignatura);
         } else {
-            throw new RuntimeException("El usuario debe ser Profesor o no estar ya incluido en la lista");
+            throw new CustomException("El usuario debe ser Profesor o no estar ya incluido en la lista");
         }
     }
 
@@ -147,7 +148,7 @@ public class CommonManager {
             asignatura.addAlumno(alumno);
             asignaturaManager.saveAsignatura(asignatura);
         } else {
-            throw new RuntimeException("El usuario debe ser Alumon o no estar ya incluido en la lista");
+            throw new CustomException("El usuario debe ser Alumno o no estar ya incluido en la lista");
         }
     }
 }
